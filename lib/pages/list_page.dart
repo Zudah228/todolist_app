@@ -230,15 +230,15 @@ class _ListPageState extends State<ListPage> {
                               ),
                             ),
                             secondaryActions: <Widget>[
-                              IconSlideAction(
-                                caption: 'Setting',
-                                color: Colors.grey,
-                                icon: Icons.settings,
-                                onTap: () async{
-                                  await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage(selfid: snapshot.data[index].id))
-                                  );
-                                },
-                              ),
+//                              IconSlideAction(
+//                                caption: 'Setting',
+//                                color: Colors.grey,
+//                                icon: Icons.settings,
+//                                onTap: () async{
+//                                  await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage(selfid: snapshot.data[index].id))
+//                                  );
+//                                },
+//                              ),
                               IconSlideAction(
                                 caption: 'Delete',
                                 color: Colors.red,

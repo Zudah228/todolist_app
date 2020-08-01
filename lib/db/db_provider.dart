@@ -107,18 +107,18 @@ class DbProvider {
     });
   }
 
-  static Future<List<Task>> getSelfDb(int id) async{
-    final List<Map<String, dynamic>> maps = await _database.query('$_tableName', where: 'id = ?', whereArgs: [id]);
-
-    return List.generate(maps.length, (i){
-      return Task(
-        id: maps[i]['id'],
-        status: maps[i]['status'],
-        title: maps[i]['title'],
-        addedDate: DateTime.parse(maps[i]['added_date']),
-        completedDate: (maps[i]['completed_date'] == null) ? null : DateTime.parse(maps[i]['completed_date']),
-      );
-    });
-  }
+//  static Future<List<Task>> getSelfDb(int id) async{
+//    final List<Map<String, dynamic>> maps = await _database.query('$_tableName', where: 'id = ?', whereArgs: [id]);
+//
+//    return List.generate(maps.length, (i){
+//      return Task(
+//        id: maps[i]['id'],
+//        status: maps[i]['status'],
+//        title: maps[i]['title'],
+//        addedDate: DateTime.parse(maps[i]['added_date']),
+//        completedDate: (maps[i]['completed_date'] == null) ? null : DateTime.parse(maps[i]['completed_date']),
+//      );
+//    });
+//  }
 
 }

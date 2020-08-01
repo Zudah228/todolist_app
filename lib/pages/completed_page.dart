@@ -50,15 +50,15 @@ class _CompletedPageState extends State<CompletedPage> {
                           subtitle: Text('Completed at ' + DateFormat('MM/dd/yyyy HH:mm').format(snapshot.data[index].completedDate)),
                         ),
                         secondaryActions: <Widget>[
-                          IconSlideAction(
-                            caption: 'Setting',
-                            color: Colors.grey,
-                            icon: Icons.settings,
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage())
-                              );
-                            },
-                          ),
+//                          IconSlideAction(
+//                            caption: 'Setting',
+//                            color: Colors.grey,
+//                            icon: Icons.settings,
+//                            onTap: () {
+//                              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage())
+//                              );
+//                            },
+//                          ),
                           IconSlideAction(
                             caption: 'Delete',
                             color: Colors.red,
