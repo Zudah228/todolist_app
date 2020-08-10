@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todolistapp/db/task.dart';
 import 'package:todolistapp/db/db_provider.dart';
 import 'package:todolistapp/pages/setting_page.dart';
+import 'package:todolistapp/db/theme.dart';
 import 'completed_page.dart';
 
 
@@ -48,57 +50,6 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  //タスクの詳細設定
-//  Future<void> _setTaskDialog(id, title,) async {
-//    return showDialog<void>(
-//      context: context,
-//      barrierDismissible: true,
-//      builder: (BuildContext context) {
-//        return AlertDialog(
-//          title: Text('Set task'),
-//          content: TextField(
-//            decoration: InputDecoration(
-//              border: InputBorder.none,
-//              hintText: 'Write your task',
-//              contentPadding: EdgeInsets.only(left: 10),
-//              errorText: _validate ? 'Can\'t be empty.' : null,
-//            ),
-//            controller: udCtrl,
-//            onChanged: (title) async{
-//              udCtrl.text.isEmpty ? _validate = true : _validate = false;
-//              Task newTask = Task(
-//                title: udCtrl.text,
-//              );
-//              _validate ? await DbProvider.updateTask(newTask, id) : null;
-//              setDb();
-//              udCtrl.clear();
-//            },
-//          ),
-//          actions: <Widget>[
-//            FlatButton(
-//              child: Text('Close'),
-//              onPressed: () {
-//                Navigator.of(context).pop();
-//              },
-//            ),
-//            FlatButton(
-//              child: Text('update'),
-//              color: Colors.blue,
-//              onPressed: () async{
-//                Task newTask = Task(
-//                  title: udCtrl.text,
-//                );
-//                await DbProvider.updateTask(newTask, id);
-//                setDb();
-//                udCtrl.clear();
-//                Navigator.of(context).pop();
-//              },
-//            ),
-//          ],
-//        );
-//      },
-//    );
-//  }
 
   int _counter = 0;
 
@@ -126,6 +77,7 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget build(BuildContext context) {
+    final theme = Provider.of<AppTheme>(context);
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("Task")),
@@ -141,6 +93,38 @@ class _ListPageState extends State<ListPage> {
             },
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                'Task List',
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            ListTile(
+              title: Text('Setting'),
+              onTap: () {
+                setState(() {
+                });
+              },
+            ),
+            SwitchListTile.adaptive(
+              title: Text('dark mode'),
+              value: theme.dark,
+              onChanged: (_) {
+                theme.changedMode();
+              },
+            )
+          ]
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -172,7 +156,7 @@ class _ListPageState extends State<ListPage> {
                     height: _formHeight,
                     child: RaisedButton(
                         child: Text("+"),
-                        color: Colors.blue,
+                        color: Theme.of(context).primaryColor,
                         textColor: Colors.white,
                         onPressed: () async {
                           eCtrl.text.isEmpty ? _validate = true : _validate = false;
@@ -230,15 +214,14 @@ class _ListPageState extends State<ListPage> {
                               ),
                             ),
                             secondaryActions: <Widget>[
-//                              IconSlideAction(
-//                                caption: 'Setting',
-//                                color: Colors.grey,
-//                                icon: Icons.settings,
-//                                onTap: () async{
-//                                  await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage(selfid: snapshot.data[index].id))
-//                                  );
-//                                },
-//                              ),
+                              IconSlideAction(
+                                caption: 'Setting',
+                                color: Colors.grey,
+                                icon: Icons.settings,
+                                onTap: () async{
+                                  await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage()));
+                                },
+                              ),
                               IconSlideAction(
                                 caption: 'Delete',
                                 color: Colors.red,

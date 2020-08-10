@@ -42,33 +42,13 @@ class _CompletedPageState extends State<CompletedPage> {
                   child: ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Slidable(
-                        actionPane: SlidableDrawerActionPane(),
+                      return Dismissible(
+                        key: ObjectKey(snapshot.data[index]),
                         child: ListTile(
                           leading: Icon(Icons.check),
                           title: Text(snapshot.data[index].title),
                           subtitle: Text('Completed at ' + DateFormat('MM/dd/yyyy HH:mm').format(snapshot.data[index].completedDate)),
                         ),
-                        secondaryActions: <Widget>[
-//                          IconSlideAction(
-//                            caption: 'Setting',
-//                            color: Colors.grey,
-//                            icon: Icons.settings,
-//                            onTap: () {
-//                              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage())
-//                              );
-//                            },
-//                          ),
-                          IconSlideAction(
-                            caption: 'Delete',
-                            color: Colors.red,
-                            icon: Icons.delete,
-                            onTap: () async{
-                              await DbProvider.deleteTask(snapshot.data[index].id);
-                              setDb();
-                            },
-                          ),
-                        ],
                       );
                     }),
                 );
