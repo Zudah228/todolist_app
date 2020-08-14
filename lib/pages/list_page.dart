@@ -36,7 +36,7 @@ class _ListPageState extends State<ListPage> {
               },
             ),
             FlatButton(
-              color: Colors.red,
+              color: Theme.of(context).errorColor,
               child: Text('Delete'),
               onPressed: () {
                 DbProvider.deleteTable();
@@ -99,7 +99,7 @@ class _ListPageState extends State<ListPage> {
           children: <Widget>[
             DrawerHeader(
               child: Text(
-                'Task List',
+                'Menu',
                 style: TextStyle(
                     fontSize: 24,
                     color: Colors.white,
@@ -210,16 +210,17 @@ class _ListPageState extends State<ListPage> {
                                   await DbProvider.updateStatus(newTask, snapshot.data[index].id);
                                   setDb();
                                 },
-
                               ),
                             ),
+
                             secondaryActions: <Widget>[
                               IconSlideAction(
                                 caption: 'Setting',
                                 color: Colors.grey,
                                 icon: Icons.settings,
                                 onTap: () async{
-                                  await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage()));
+                                  await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage(selfdb: snapshot.data[index])));
+                                  setState(() {});
                                 },
                               ),
                               IconSlideAction(

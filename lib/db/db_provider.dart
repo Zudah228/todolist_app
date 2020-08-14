@@ -71,8 +71,7 @@ class DbProvider {
   static Future<void> updateTask(Task task, int id) async{
     await _database.update(
       _tableName, {
-      'title': task.status,
-      'completed_date': (task.completedDate == null) ? null : DateFormat('yyyy-MM-dd HH:mm').format(task.completedDate)
+      'title': task.title,
     },
       where: 'id = ?',
       whereArgs: [id],
