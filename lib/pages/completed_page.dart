@@ -44,6 +44,11 @@ class _CompletedPageState extends State<CompletedPage> {
                     itemBuilder: (BuildContext context, int index) {
                       return Dismissible(
                         key: ObjectKey(snapshot.data[index]),
+                        background: Container(color: Colors.red),
+                        onDismissed: (direction)async{
+                          await DbProvider.deleteTask(snapshot.data[index].id);
+                          setDb();
+                      },
                         child: ListTile(
                           leading: Icon(Icons.check),
                           title: Text(snapshot.data[index].title),

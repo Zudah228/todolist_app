@@ -184,57 +184,54 @@ class _ListPageState extends State<ListPage> {
                   child: ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Dismissible(
-                          key: ObjectKey(snapshot.data[index]),
-                          child: Slidable(
-                            actionPane: SlidableDrawerActionPane(),
-                            child: ListTile(
-                              leading: Icon(Icons.list),
-                              title: Text(snapshot.data[index].title),
-                              subtitle: Text('Added at ' + DateFormat('MM/dd/yyyy HH:mm').format(snapshot.data[index].addedDate)),
-                              trailing: Checkbox(
-                                activeColor: Colors.green,
-                                value: (snapshot.data[index].status == 1) ? true : false,
-                                onChanged: (bool check) async{
-                                  if (check) {
-                                    newTask = Task (
-                                      status: 1,
-                                      completedDate: DateTime.now()
+                        return Slidable(
+                          actionPane: SlidableDrawerActionPane(),
+                          child: ListTile(
+                            leading: Icon(Icons.list),
+                            title: Text(snapshot.data[index].title),
+                            subtitle: Text('Added at ' + DateFormat('MM/dd/yyyy HH:mm').format(snapshot.data[index].addedDate)),
+                            trailing: Checkbox(
+                              activeColor: Colors.green,
+                              value: (snapshot.data[index].status == 1) ? true : false,
+                              onChanged: (bool check) async{
+                                if (check) {
+                                  newTask = Task (
+                                    status: 1,
+                                    completedDate: DateTime.now()
+                                );
+                                } else {
+                                  newTask = Task (
+                                    status: 0,
+                                    completedDate: null
                                   );
-                                  } else {
-                                    newTask = Task (
-                                      status: 0,
-                                      completedDate: null
-                                    );
-                                  }
-                                  await DbProvider.updateStatus(newTask, snapshot.data[index].id);
-                                  setDb();
-                                },
-                              ),
+                                }
+                                await DbProvider.updateStatus(newTask, snapshot.data[index].id);
+                                setDb();
+                              },
+                            ),
+                          ),
+
+                          secondaryActions: <Widget>[
+                            IconSlideAction(
+                              caption: 'Setting',
+                              color: Colors.grey,
+                              icon: Icons.settings,
+                              onTap: () async{
+                                await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage(selfdb: snapshot.data[index])));
+                                setState(() {});
+                              },
+                            ),
+                            IconSlideAction(
+                              caption: 'Delete',
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              onTap: () async{
+                                await DbProvider.deleteTask(snapshot.data[index].id);
+                                setDb();
+                              },
                             ),
 
-                            secondaryActions: <Widget>[
-                              IconSlideAction(
-                                caption: 'Setting',
-                                color: Colors.grey,
-                                icon: Icons.settings,
-                                onTap: () async{
-                                  await Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage(selfdb: snapshot.data[index])));
-                                  setState(() {});
-                                },
-                              ),
-                              IconSlideAction(
-                                caption: 'Delete',
-                                color: Colors.red,
-                                icon: Icons.delete,
-                                onTap: () async{
-                                  await DbProvider.deleteTask(snapshot.data[index].id);
-                                  setDb();
-                                },
-                              ),
-
-                            ],
-                          ),
+                          ],
                         );
                       }
                   ),
